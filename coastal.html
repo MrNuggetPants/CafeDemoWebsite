@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tide &amp; Cup — Coastal Cafe Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #eef7fa;
+    --ocean: #1b5e73;
+    --ocean-mid: #2d7a96;
+    --sky: #82c4d8;
+    --pale: #c5e8f2;
+    --sand: #f5ecd8;
+    --white: #ffffff;
+    --ink: #132833;
+    --muted: #5a7d8a;
+    --coral: #e07d5a;
+    --line: #c0dde8;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3.5rem;
+    background: rgba(238,247,250,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ocean);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 400; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ocean); }
+  .nav-order {
+    background: var(--ocean);
+    color: #fff;
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-order:hover { background: var(--ocean-mid); }
+
+  /* HERO */
+  .hero {
+    padding: 7.5rem 3.5rem 0;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: end;
+    min-height: 90vh;
+  }
+  .hero-content { padding-bottom: 5rem; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--pale);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ocean);
+    margin-bottom: 2rem;
+  }
+  .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.12;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--ocean); }
+  .hero p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-ocean {
+    background: var(--ocean);
+    color: #fff;
+    padding: 0.85rem 1.75rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-ocean:hover { background: var(--ocean-mid); }
+  .btn-outline-ocean {
+    border: 1.5px solid var(--ocean);
+    color: var(--ocean);
+    padding: 0.85rem 1.75rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-ocean:hover { background: var(--ocean); color: #fff; }
+
+  .hero-visual {
+    background: var(--ocean);
+    border-radius: 16px 16px 0 0;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+  }
+  .hero-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+  .hero-visual-placeholder {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+  }
+  .visual-ph-text { color: var(--pale); font-size: 0.8rem; opacity: 0.7; text-align: center; padding: 1rem; }
+  .hero-card {
+    position: relative;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex; gap: 1.5rem;
+  }
+  .hero-card-item { text-align: center; }
+  .hci-label { font-size: 0.62rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.2rem; }
+  .hci-val { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 300; color: #fff; }
+
+  /* WAVES */
+  .wave {
+    background: var(--ocean);
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+  }
+  .wave::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: var(--bg);
+    border-radius: 100% 100% 0 0 / 60px 60px 0 0;
+  }
+
+  /* SPECIALS */
+  .specials {
+    padding: 5rem 3.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-badge {
+    display: inline-block;
+    background: var(--pale);
+    color: var(--ocean);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  .specials h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .specials-sub {
+    font-size: 0.88rem; color: var(--muted); font-weight: 300; margin-bottom: 3rem; max-width: 440px; line-height: 1.7;
+  }
+  .specials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .special-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: transform 0.2s;
+  }
+  .special-card:hover { transform: translateY(-4px); }
+  .sc-img {
+    height: 160px;
+    background: var(--pale);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .sc-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sc-ph { font-size: 0.7rem; color: var(--muted); text-align: center; font-style: italic; }
+  .sc-body { padding: 1.25rem; }
+  .sc-tag { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); font-weight: 500; margin-bottom: 0.4rem; }
+  .sc-name { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 300; color: var(--ink); margin-bottom: 0.4rem; }
+  .sc-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.75rem; font-weight: 300; }
+  .sc-price { font-size: 0.85rem; font-weight: 500; color: var(--ocean); }
+
+  /* FULL MENU */
+  .full-menu {
+    background: var(--ocean);
+    padding: 5rem 3.5rem;
+  }
+  .fm-inner { max-width: 1000px; margin: 0 auto; }
+  .fm-inner h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 0.5rem;
+  }
+  .fm-sub { font-size: 0.85rem; color: var(--pale); margin-bottom: 3.5rem; font-weight: 300; }
+  .fm-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 4rem; }
+  .fm-col-title {
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .fm-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 1rem;
+  }
+  .fm-item:last-child { border-bottom: 0; }
+  .fm-name { font-size: 0.88rem; color: rgba(255,255,255,0.9); }
+  .fm-note { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.15rem; }
+  .fm-price { font-family: 'Fraunces', serif; font-size: 0.9rem; color: var(--sky); white-space: nowrap; }
+
+  /* ABOUT */
+  .about-coastal {
+    padding: 6rem 3.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-coastal h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.2;
+  }
+  .about-coastal p {
+    font-size: 0.88rem; font-weight: 300; color: var(--muted); line-height: 1.85; margin-bottom: 1rem;
+  }
+  .about-img-coastal {
+    background: var(--pale);
+    border-radius: 16px;
+    height: 420px;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .about-img-coastal img { width: 100%; height: 100%; object-fit: cover; }
+  .img-ph { font-size: 0.75rem; color: var(--muted); text-align: center; font-style: italic; }
+
+  /* VISIT */
+  .visit-coastal {
+    background: var(--sand);
+    border-top: 1px solid var(--line);
+    padding: 5rem 3.5rem;
+  }
+  .vc-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .vc-inner h2 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300; color: var(--ink); margin-bottom: 2rem; }
+  .vi-row { display: flex; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid rgba(0,0,0,0.08); align-items: flex-start; }
+  .vi-row:last-child { border-bottom: 0; }
+  .vi-icon { color: var(--ocean); font-size: 1rem; flex-shrink: 0; }
+  .vi-content {}
+  .vi-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+  .vi-val { font-size: 0.88rem; color: var(--ink); font-weight: 300; }
+  .map-coastal {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    height: 280px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-coastal span { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+
+  /* BACK */
+  .back-bar {
+    border-top: 1px solid var(--line);
+    padding: 1.5rem;
+    text-align: center;
+    background: var(--bg);
+  }
+  .back-bar a { font-size: 0.72rem; color: var(--muted); text-decoration: none; }
+  .back-bar a:hover { color: var(--ocean); }
+  .back-bar a::before { content: '← '; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 2.5rem 3.5rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 300; color: var(--pale); }
+  footer p { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 0; min-height: auto; }
+    .hero-content { padding-bottom: 3rem; }
+    .hero-visual { height: 320px; }
+    .about-coastal { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+    .vc-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .full-menu { padding: 4rem 1.5rem; }
+    .fm-cols { grid-template-columns: 1fr; }
+    .specials { padding: 4rem 1.5rem; }
+    .visit-coastal { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Tide &amp; Cup</a>
+  <ul class="nav-links">
+    <li><a href="#specials">Today's specials</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">Our story</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <a href="#visit" class="nav-order">Find us</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-pill"><span class="pill-dot"></span> Open today until 5:00 pm</div>
+    <h1>Coffee with a<br>view of the <em>sea</em></h1>
+    <p>Tide &amp; Cup sits at the edge of the harbour in Padstow. We open early, serve good coffee, and watch the boats come in. Come as you are.</p>
+    <div class="hero-btns">
+      <a href="#specials" class="btn-ocean">Today's menu</a>
+      <a href="#about" class="btn-outline-ocean">Our story</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-placeholder">
+      <div class="visual-ph-text">coastal.jpg<br>your harbourside photo here</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-item">
+        <div class="hci-label">Today</div>
+        <div class="hci-val">Sunny</div>
+      </div>
+      <div class="hero-card-item">
+        <div class="hci-label">Tide</div>
+        <div class="hci-val">High 11:40</div>
+      </div>
+      <div class="hero-card-item">
+        <div class="hci-label">Bean</div>
+        <div class="hci-val">Ethiopia Yirgacheffe</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="specials" id="specials">
+  <div class="section-badge">Today's specials</div>
+  <h2>Fresh from the kitchen</h2>
+  <p class="specials-sub">Our specials change each morning depending on what's come in from the market and the boats. These are always worth asking about.</p>
+  <div class="specials-grid">
+    <div class="special-card">
+      <div class="sc-img"><div class="sc-ph">Photo</div></div>
+      <div class="sc-body">
+        <div class="sc-tag">Coffee special</div>
+        <div class="sc-name">Cold brew lemonade</div>
+        <div class="sc-desc">Our 24hr cold brew over ice with a splash of house-made lemonade. Summery and sharp.</div>
+        <div class="sc-price">£4.80</div>
+      </div>
+    </div>
+    <div class="special-card">
+      <div class="sc-img"><div class="sc-ph">Photo</div></div>
+      <div class="sc-body">
+        <div class="sc-tag">Kitchen special</div>
+        <div class="sc-name">Crab on toast</div>
+        <div class="sc-desc">Local crab from the harbour, dressed simply with lemon and dill. Sourdough from Trevibban Mill.</div>
+        <div class="sc-price">£12.50</div>
+      </div>
+    </div>
+    <div class="special-card">
+      <div class="sc-img"><div class="sc-ph">Photo</div></div>
+      <div class="sc-body">
+        <div class="sc-tag">Sweet</div>
+        <div class="sc-name">Cornish clotted cream scone</div>
+        <div class="sc-desc">Baked this morning, served with proper clotted cream and strawberry jam. A Padstow essential.</div>
+        <div class="sc-price">£4.20</div>
+      </div>
+    </div>
+    <div class="special-card">
+      <div class="sc-img"><div class="sc-ph">Photo</div></div>
+      <div class="sc-body">
+        <div class="sc-tag">Kids' special</div>
+        <div class="sc-name">Mini pancakes &amp; fruit</div>
+        <div class="sc-desc">Fluffy American-style pancakes with seasonal fruit and a drizzle of local honey.</div>
+        <div class="sc-price">£5.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-menu" id="menu">
+  <div class="fm-inner">
+    <h2>Our menu</h2>
+    <p class="fm-sub">Served daily, all day</p>
+    <div class="fm-cols">
+      <div class="fm-col">
+        <div class="fm-col-title">Drinks</div>
+        <div class="fm-item"><div><div class="fm-name">Flat White</div><div class="fm-note">Full cream or oat</div></div><div class="fm-price">£3.80</div></div>
+        <div class="fm-item"><div><div class="fm-name">Cappuccino</div><div class="fm-note">Dusted with chocolate</div></div><div class="fm-price">£3.60</div></div>
+        <div class="fm-item"><div><div class="fm-name">Filter coffee</div><div class="fm-note">Rotating origin</div></div><div class="fm-price">£2.80</div></div>
+        <div class="fm-item"><div><div class="fm-name">Iced latte</div><div class="fm-note">Over ice, choose milk</div></div><div class="fm-price">£4.20</div></div>
+        <div class="fm-item"><div><div class="fm-name">Fruit smoothie</div><div class="fm-note">Ask for today's blend</div></div><div class="fm-price">£5.00</div></div>
+      </div>
+      <div class="fm-col">
+        <div class="fm-col-title">Food</div>
+        <div class="fm-item"><div><div class="fm-name">Full Cornish breakfast</div><div class="fm-note">Local sausages, eggs, everything</div></div><div class="fm-price">£12.00</div></div>
+        <div class="fm-item"><div><div class="fm-name">Eggs your way</div><div class="fm-note">Sourdough toast</div></div><div class="fm-price">£7.50</div></div>
+        <div class="fm-item"><div><div class="fm-name">Granola &amp; yoghurt</div><div class="fm-note">House granola, seasonal compote</div></div><div class="fm-price">£6.50</div></div>
+        <div class="fm-item"><div><div class="fm-name">BLT sandwich</div><div class="fm-note">Proper Cornish bacon, local tomatoes</div></div><div class="fm-price">£8.00</div></div>
+        <div class="fm-item"><div><div class="fm-name">Cream tea</div><div class="fm-note">2 scones, clotted cream, jam</div></div><div class="fm-price">£7.50</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-coastal" id="about">
+  <div>
+    <div class="section-badge">Our story</div>
+    <h2>A cafe at the edge of the harbour</h2>
+    <p>Tide &amp; Cup has been on the Padstow waterfront since 2016. The name comes from a simple truth: the rhythm of the cafe follows the tide. When the boats come in, the fishermen come in. When the tourists arrive in summer, we open the terrace.</p>
+    <p>We serve St Austell roasted coffee alongside proper Cornish food — things you'd want to eat with a view of the water. Nothing fancy, just good ingredients and fresh air.</p>
+    <p>Dogs welcome. Children welcome. Just mind the seagulls.</p>
+  </div>
+  <div class="about-img-coastal">
+    <div class="img-ph">coastal.jpg</div>
+  </div>
+</section>
+
+<section class="visit-coastal" id="visit">
+  <div class="vc-inner">
+    <div>
+      <h2>Come and find us</h2>
+      <div class="vi-row">
+        <div class="vi-icon">📍</div>
+        <div class="vi-content">
+          <div class="vi-label">Address</div>
+          <div class="vi-val">2 Harbour Front, Padstow, Cornwall PL28 8AQ</div>
+        </div>
+      </div>
+      <div class="vi-row">
+        <div class="vi-icon">🕗</div>
+        <div class="vi-content">
+          <div class="vi-label">Hours</div>
+          <div class="vi-val">Daily 7:30am – 5:00pm (6pm in summer)</div>
+        </div>
+      </div>
+      <div class="vi-row">
+        <div class="vi-icon">📞</div>
+        <div class="vi-content">
+          <div class="vi-label">Phone</div>
+          <div class="vi-val">01841 532 190</div>
+        </div>
+      </div>
+      <div class="vi-row">
+        <div class="vi-icon">🐕</div>
+        <div class="vi-content">
+          <div class="vi-label">Good to know</div>
+          <div class="vi-val">Dog friendly, outdoor terrace, pram accessible</div>
+        </div>
+      </div>
+    </div>
+    <div class="map-coastal"><span>Map embed</span></div>
+  </div>
+</section>
+
+<div class="back-bar">
+  <a href="index.html">Back to all styles</a>
+</div>
+
+<footer>
+  <div class="logo">Tide &amp; Cup</div>
+  <p>Padstow Harbour, Cornwall &nbsp;·&nbsp; @tideandcup</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafe Websites — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --muted: #6b6b60;
+    --warm: #c8a96e;
+    --warm-light: #f5eedf;
+    --surface: #faf8f4;
+    --white: #ffffff;
+    --radius: 4px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,169,110,0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-cta {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--warm);
+    padding: 0.5rem 1.25rem;
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--warm); color: #fff; }
+
+  /* HERO */
+  .hero {
+    padding: 9rem 3rem 5rem;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--warm);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--warm);
+  }
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #333; }
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-decoration: none;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); border-bottom-color: var(--warm); }
+
+  /* DIVIDER */
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--warm);
+    margin: 0 auto 4rem;
+  }
+
+  /* HOW IT WORKS */
+  .how {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 3rem 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+  }
+  .how-item {}
+  .how-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--warm-light);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .how-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .how-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* DEMOS SECTION */
+  .demos-section {
+    background: var(--white);
+    border-top: 1px solid rgba(200,169,110,0.15);
+    border-bottom: 1px solid rgba(200,169,110,0.15);
+    padding: 5rem 3rem;
+  }
+  .demos-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--warm);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    max-width: 480px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.7;
+  }
+
+  /* STYLE GRID */
+  .style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .style-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(200,169,110,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .style-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .card-thumb {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .style-card:hover .card-thumb img { transform: scale(1.04); }
+  .card-thumb-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .card-body { padding: 1.5rem; }
+  .card-tag {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 0.5rem;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+  .card-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .card-link::after { content: '→'; transition: transform 0.2s; }
+  .style-card:hover .card-link::after { transform: translateX(4px); }
+
+  /* CUSTOM CTA */
+  .custom-section {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    text-align: center;
+  }
+  .custom-box {
+    background: var(--warm-light);
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 8px;
+    padding: 3.5rem;
+  }
+  .custom-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .custom-box p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    max-width: 460px;
+    margin: 0 auto 2rem;
+  }
+  .btn-warm {
+    background: var(--warm);
+    color: #fff;
+    padding: 0.9rem 2.25rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-warm:hover { background: #b8944f; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(200,169,110,0.15);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  footer a { font-size: 0.8rem; color: var(--warm); text-decoration: none; }
+
+  /* Thumb colors per style */
+  .thumb-rustic { background: #3d2b1f; color: #c8a96e; }
+  .thumb-modern { background: #111; color: #e8e8e8; }
+  .thumb-minimal { background: #f0ede8; color: #555; }
+  .thumb-coastal { background: #2d6a7c; color: #b8dde8; }
+  .thumb-bakery { background: #7a3a2a; color: #f5d5b8; }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .how { padding: 0 1.5rem 4rem; }
+    .demos-section { padding: 4rem 1.5rem; }
+    .custom-section { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .custom-box { padding: 2.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Cafe&thinsp;Studio</a>
+  <a href="mailto:hello@cafestudio.com" class="nav-cta">Get in touch</a>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Web design for independent cafes</p>
+  <h1>Your cafe deserves a website as <em>good as your coffee</em></h1>
+  <p>We design beautiful, professional websites tailored to the personality of your cafe — warm and rustic, sleek and modern, light and minimal. Browse the styles below and let's build something that brings people through your door.</p>
+  <div class="hero-actions">
+    <a href="#demos" class="btn-primary">See demo styles</a>
+    <a href="#custom" class="btn-ghost">Request custom design</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="how">
+  <div class="how-item">
+    <div class="how-num">01</div>
+    <div class="how-title">Pick a direction</div>
+    <div class="how-desc">Browse the example styles below. Each one is a fully built template you can see at work.</div>
+  </div>
+  <div class="how-item">
+    <div class="how-num">02</div>
+    <div class="how-title">We make it yours</div>
+    <div class="how-desc">Your photos, menu, opening times, and story. We adapt everything to match your cafe's identity.</div>
+  </div>
+  <div class="how-item">
+    <div class="how-num">03</div>
+    <div class="how-title">Go live fast</div>
+    <div class="how-desc">Most builds take 5–7 days. You get a site that works on every device from day one.</div>
+  </div>
+</div>
+
+<section class="demos-section" id="demos">
+  <div class="demos-inner">
+    <p class="section-label">Demo styles</p>
+    <h2 class="section-title">Five looks, one great cup</h2>
+    <p class="section-sub">These are example designs — not templates. Every cafe site we build is crafted from scratch around your space and story.</p>
+
+    <div class="style-grid">
+
+      <a href="rustic.html" class="style-card">
+        <div class="card-thumb">
+          <div class="card-thumb-fallback thumb-rustic">The Hearthside</div>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Style 01</p>
+          <h3 class="card-title">Rustic &amp; Warm</h3>
+          <p class="card-desc">Dark wood, worn leather, and the smell of something baking. For cafes with soul and a story behind the bar.</p>
+          <span class="card-link">View demo</span>
+        </div>
+      </a>
+
+      <a href="modern.html" class="style-card">
+        <div class="card-thumb">
+          <div class="card-thumb-fallback thumb-modern">Noir Espresso</div>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Style 02</p>
+          <h3 class="card-title">Modern &amp; Minimal Dark</h3>
+          <p class="card-desc">High-contrast, architectural. For specialty roasters and cafes that take craft seriously.</p>
+          <span class="card-link">View demo</span>
+        </div>
+      </a>
+
+      <a href="minimal.html" class="style-card">
+        <div class="card-thumb">
+          <div class="card-thumb-fallback thumb-minimal">Stillwater</div>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Style 03</p>
+          <h3 class="card-title">Clean &amp; Minimal</h3>
+          <p class="card-desc">All whitespace and intention. For cafes where everything is considered — the pour, the ceramic, the light.</p>
+          <span class="card-link">View demo</span>
+        </div>
+      </a>
+
+      <a href="coastal.html" class="style-card">
+        <div class="card-thumb">
+          <div class="card-thumb-fallback thumb-coastal">Tide &amp; Cup</div>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Style 04</p>
+          <h3 class="card-title">Coastal &amp; Bright</h3>
+          <p class="card-desc">Salt air and blue sky. For beach-town cafes, seaside spots, and anyone who starts their day with a view.</p>
+          <span class="card-link">View demo</span>
+        </div>
+      </a>
+
+      <a href="bakery.html" class="style-card">
+        <div class="card-thumb">
+          <div class="card-thumb-fallback thumb-bakery">Flour &amp; Hour</div>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Style 05</p>
+          <h3 class="card-title">Bakery Cafe</h3>
+          <p class="card-desc">Warm terracotta, hand-drawn charm, and a menu that changes with what came out of the oven this morning.</p>
+          <span class="card-link">View demo</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="custom-section" id="custom">
+  <div class="custom-box">
+    <h2>Don't see quite the right fit?</h2>
+    <p>These demos show a handful of directions, but we build every site from scratch. If you have a specific vibe in mind — or no idea at all — get in touch and we'll work it out together. Custom designs are our favourite kind.</p>
+    <a href="mailto:hello@cafestudio.com" class="btn-warm">Request a custom style</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Cafe Studio. Crafted for independent cafes.</p>
+  <a href="mailto:hello@cafestudio.com">hello@cafestudio.com</a>
+</footer>
+
+</body>
+</html>
