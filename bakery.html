@@ -1,57 +1,620 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Bakery Café</title>
-    <style>
-        body {
-            font-family: Georgia;
-            background: #fff8f0;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flour &amp; Hour — Bakery Cafe Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Libre+Baskerville:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #fdf6ee;
+    --white: #ffffff;
+    --terra: #c05c3a;
+    --terra-light: #e07a56;
+    --terra-pale: #f5e0d6;
+    --rust: #8b3a1f;
+    --dough: #f0dfc8;
+    --ink: #2a1a0e;
+    --muted: #7a5c46;
+    --warm-line: #e8d5c0;
+    --sage: #6b7c5e;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
 
-        header {
-            text-align: center;
-            padding: 30px;
-            background: #f4a261;
-            color: white;
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(253,246,238,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--warm-line);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--terra);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; font-weight: 400; color: var(--muted);
+    text-decoration: none; transition: color 0.2s; letter-spacing: 0.04em;
+  }
+  .nav-links a:hover { color: var(--terra); }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 900px;
-            margin: auto;
-            padding: 30px;
-        }
+  /* HERO — split layout */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    padding-top: 5rem;
+  }
+  .hero-left {
+    background: var(--terra);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-left img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-left-ph {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; padding: 3rem; text-align: center;
+  }
+  .hero-left-ph .ph-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.04em;
+  }
+  .hero-left-ph .ph-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: 2.5rem; left: 2.5rem;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.08em;
+  }
 
-        .box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-        }
-    </style>
+  .hero-right {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 4rem;
+  }
+  .hero-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .hero-right h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-right h1 em { font-style: italic; color: var(--terra); }
+  .hero-right p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 2.5rem;
+    max-width: 400px;
+  }
+  .hero-hours {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    padding: 1.75rem;
+    background: var(--dough);
+    border-radius: 8px;
+    border: 1px solid var(--warm-line);
+    max-width: 340px;
+  }
+  .hours-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.25rem;
+  }
+  .hour-row { display: flex; justify-content: space-between; font-size: 0.85rem; }
+  .hour-day { color: var(--muted); }
+  .hour-time { color: var(--ink); font-weight: 500; }
+
+  /* STRIP */
+  .info-strip {
+    background: var(--terra);
+    display: flex;
+    overflow: hidden;
+  }
+  .strip-item {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.06em;
+  }
+  .strip-item:last-child { border-right: 0; }
+  .strip-item strong { display: block; font-size: 1rem; color: #fff; font-weight: 500; margin-bottom: 0.2rem; font-family: 'Playfair Display', serif; }
+
+  /* MENU */
+  .menu-section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .menu-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .menu-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .menu-header p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* BAKED GOODS CARDS */
+  .bakes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .bake-card {
+    background: var(--white);
+    border: 1px solid var(--warm-line);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .bake-card:hover { transform: translateY(-3px); }
+  .bake-img {
+    height: 140px;
+    background: var(--terra-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+  }
+  .bake-body { padding: 1rem 1.25rem; }
+  .bake-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .bake-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.75rem; }
+  .bake-price { font-size: 0.85rem; font-weight: 500; color: var(--terra); }
+
+  /* MENU LISTS */
+  .menu-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--warm-line);
+  }
+  .ml-section {}
+  .ml-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    border-bottom: 1px solid var(--warm-line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .ml-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--warm-line);
+    gap: 1rem;
+  }
+  .ml-item:last-child { border-bottom: 0; }
+  .ml-name { font-size: 0.88rem; color: var(--ink); }
+  .ml-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; font-style: italic; }
+  .ml-price { font-size: 0.88rem; color: var(--terra); font-weight: 500; white-space: nowrap; }
+
+  /* ABOUT */
+  .about {
+    background: var(--dough);
+    border-top: 1px solid var(--warm-line);
+    border-bottom: 1px solid var(--warm-line);
+    padding: 6rem 3rem;
+  }
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .about-text p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+  .about-img {
+    background: var(--terra-pale);
+    border-radius: 12px;
+    aspect-ratio: 4/5;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--warm-line);
+    overflow: hidden;
+  }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+  .about-ph { font-size: 0.75rem; color: var(--muted); text-align: center; font-style: italic; padding: 2rem; }
+
+  /* DAILY BOARD */
+  .daily-board {
+    padding: 5rem 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .board-box {
+    background: var(--white);
+    border: 2px solid var(--terra);
+    border-radius: 12px;
+    padding: 3rem;
+  }
+  .board-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--terra);
+    margin-bottom: 0.5rem;
+  }
+  .board-date {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .board-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    text-align: left;
+  }
+  .bi {
+    padding: 1rem;
+    background: var(--terra-pale);
+    border-radius: 8px;
+  }
+  .bi-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.4rem; }
+  .bi-item { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.2rem; }
+  .bi-note { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+
+  /* VISIT */
+  .visit {
+    background: var(--terra);
+    padding: 5rem 3rem;
+  }
+  .visit-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .visit h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 2rem;
+  }
+  .v-item { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.15); }
+  .v-item:last-child { border-bottom: 0; }
+  .v-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
+  .v-val { font-size: 0.9rem; color: rgba(255,255,255,0.9); }
+  .map-terra {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    height: 280px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-terra span { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-style: italic; }
+
+  /* BACK */
+  .back-bar {
+    border-top: 1px solid var(--warm-line);
+    padding: 1.5rem;
+    text-align: center;
+    background: var(--bg);
+  }
+  .back-bar a { font-size: 0.72rem; color: var(--muted); text-decoration: none; }
+  .back-bar a:hover { color: var(--terra); }
+  .back-bar a::before { content: '← '; }
+
+  /* FOOTER */
+  footer {
+    background: var(--rust);
+    padding: 2.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--terra-pale); }
+  footer p { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { min-height: 300px; }
+    .hero-right { padding: 3rem 1.5rem; }
+    .menu-section { padding: 4rem 1.5rem; }
+    .menu-lists { grid-template-columns: 1fr; gap: 2rem; }
+    .bakes-grid { grid-template-columns: 1fr 1fr; }
+    .about { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .board-items { grid-template-columns: 1fr; }
+    .visit { padding: 4rem 1.5rem; }
+    .visit-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
 </head>
-
 <body>
 
-<header>
-    <h1>Bakery Café</h1>
-</header>
+<nav>
+  <a href="index.html" class="nav-logo">Flour &amp; Hour</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#daily">Today's bakes</a></li>
+    <li><a href="#about">Our story</a></li>
+    <li><a href="#visit">Find us</a></li>
+  </ul>
+</nav>
 
-<div class="grid">
-
-    <div class="box">
-        <h3>Croissants</h3>
-        <p>Fresh baked daily</p>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-left-ph">
+      <div class="ph-name">Flour &amp; Hour</div>
+      <div class="ph-label">bakery.jpg — your photo here</div>
     </div>
-
-    <div class="box">
-        <h3>Cakes</h3>
-        <p>Custom birthday cakes</p>
+    <div class="hero-badge">Baked fresh from 5:30am daily</div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-tag">Fitzroy, Melbourne</p>
+    <h1>Baked with flour,<br>made with <em>time</em></h1>
+    <p>Everything at Flour &amp; Hour starts the night before. Long ferments, slow proofs, and morning ovens. We're a bakery that also happens to make very good coffee.</p>
+    <div class="hero-hours">
+      <p class="hours-title">Opening hours</p>
+      <div class="hour-row"><span class="hour-day">Monday – Friday</span><span class="hour-time">6:30 – 15:00</span></div>
+      <div class="hour-row"><span class="hour-day">Saturday</span><span class="hour-time">7:00 – 14:00</span></div>
+      <div class="hour-row"><span class="hour-day">Sunday</span><span class="hour-time">7:30 – 13:00</span></div>
+      <div class="hour-row"><span class="hour-day">Public holidays</span><span class="hour-time">Closed</span></div>
     </div>
+  </div>
+</section>
 
+<div class="info-strip">
+  <div class="strip-item"><strong>48hr</strong> ferment on all sourdoughs</div>
+  <div class="strip-item"><strong>Local</strong> stone-milled flour, Tuerong Farm</div>
+  <div class="strip-item"><strong>Market</strong> seasonal produce weekly</div>
+  <div class="strip-item"><strong>Sold out</strong> by noon most Saturdays</div>
 </div>
+
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <span class="section-eyebrow">From the bakery</span>
+    <h2>What's in the cabinet</h2>
+    <p>Made each morning. Once they're gone, they're gone.</p>
+  </div>
+
+  <div class="bakes-grid">
+    <div class="bake-card">
+      <div class="bake-img">🍞</div>
+      <div class="bake-body">
+        <div class="bake-name">Country sourdough</div>
+        <div class="bake-desc">48hr ferment, stone-milled wheat, open crumb</div>
+        <div class="bake-price">$12.00 / loaf</div>
+      </div>
+    </div>
+    <div class="bake-card">
+      <div class="bake-img">🥐</div>
+      <div class="bake-body">
+        <div class="bake-name">Butter croissant</div>
+        <div class="bake-desc">72hr laminated dough, Pepe Saya butter</div>
+        <div class="bake-price">$5.50</div>
+      </div>
+    </div>
+    <div class="bake-card">
+      <div class="bake-img">🥧</div>
+      <div class="bake-body">
+        <div class="bake-name">Seasonal tart</div>
+        <div class="bake-desc">Rotating filling — ask what's in today</div>
+        <div class="bake-price">$6.50</div>
+      </div>
+    </div>
+    <div class="bake-card">
+      <div class="bake-img">🥨</div>
+      <div class="bake-body">
+        <div class="bake-name">Seeded rye loaf</div>
+        <div class="bake-desc">Dark rye, pepitas, sunflower, linseed</div>
+        <div class="bake-price">$14.00 / loaf</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-lists" id="menu">
+    <div class="ml-section">
+      <div class="ml-title">Coffee</div>
+      <div class="ml-item">
+        <div><div class="ml-name">Batch filter</div><div class="ml-sub">Pourover style, rotating origin</div></div>
+        <div class="ml-price">$4.50</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Flat white</div><div class="ml-sub">Full cream or oat</div></div>
+        <div class="ml-price">$5.50</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Long black</div><div class="ml-sub">Double ristretto</div></div>
+        <div class="ml-price">$4.80</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Piccolo</div><div class="ml-sub">75ml glass</div></div>
+        <div class="ml-price">$4.50</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Cold brew</div><div class="ml-sub">18hr steep, on ice</div></div>
+        <div class="ml-price">$6.00</div>
+      </div>
+    </div>
+    <div class="ml-section">
+      <div class="ml-title">Kitchen</div>
+      <div class="ml-item">
+        <div><div class="ml-name">Toast of the day</div><div class="ml-sub">Ask for today's bread, cultured butter</div></div>
+        <div class="ml-price">$7.00</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Ricotta &amp; honey toast</div><div class="ml-sub">Whipped ricotta, local honey, walnuts</div></div>
+        <div class="ml-price">$14.00</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Soft eggs on rye</div><div class="ml-sub">Free-range, chilli butter, chives</div></div>
+        <div class="ml-price">$16.00</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Granola bowl</div><div class="ml-sub">House granola, Meredith sheep yoghurt, fruit</div></div>
+        <div class="ml-price">$15.00</div>
+      </div>
+      <div class="ml-item">
+        <div><div class="ml-name">Soup &amp; bread</div><div class="ml-sub">Changes daily, served with sourdough</div></div>
+        <div class="ml-price">$16.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="daily-board" id="daily">
+  <div class="board-box">
+    <p class="board-title">Today's bake board</p>
+    <p class="board-date">Updated each morning</p>
+    <div class="board-items">
+      <div class="bi">
+        <div class="bi-label">Loaves</div>
+        <div class="bi-item">Country sourdough</div>
+        <div class="bi-note">Last ones at 11am</div>
+        <br>
+        <div class="bi-item">Dark rye seeded</div>
+        <div class="bi-note">Limited — 6 loaves</div>
+      </div>
+      <div class="bi">
+        <div class="bi-label">Pastries</div>
+        <div class="bi-item">Butter croissant</div>
+        <div class="bi-note">Freshest before 9am</div>
+        <br>
+        <div class="bi-item">Almond croissant</div>
+        <div class="bi-note">From leftover croissants</div>
+      </div>
+      <div class="bi">
+        <div class="bi-label">Sweets</div>
+        <div class="bi-item">Blood orange tart</div>
+        <div class="bi-note">Seasonal citrus</div>
+        <br>
+        <div class="bi-item">Chocolate rye cookie</div>
+        <div class="bi-note">70% Zokoko chocolate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <span class="section-eyebrow">Our story</span>
+      <h2>A bakery born from a very small kitchen</h2>
+      <p>Flour &amp; Hour started in 2019 when our head baker, Mia, was making sourdough in her Fitzroy terrace and running out of places to put it. She sold loaves to neighbours, then to a local grocer, then opened the shopfront in 2021.</p>
+      <p>We mill our own flour on a stone mill from Tuerong Farm grain, ferment everything long and slow, and bake in a single wood-fired oven that came over from France in pieces.</p>
+      <p>We're not precious about it. Come in your bike gear, bring your dog, stay for a second coffee.</p>
+    </div>
+    <div class="about-img">
+      <p class="about-ph">bakery.jpg — your photo here</p>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <div class="visit-inner">
+    <div>
+      <h2>Come in</h2>
+      <div class="v-item"><div class="v-label">Address</div><div class="v-val">34 Smith Street, Fitzroy VIC 3065</div></div>
+      <div class="v-item"><div class="v-label">Hours</div><div class="v-val">Mon–Fri 6:30–15:00 · Sat 7:00–14:00 · Sun 7:30–13:00</div></div>
+      <div class="v-item"><div class="v-label">Phone</div><div class="v-val">(03) 9417 2288</div></div>
+      <div class="v-item"><div class="v-label">Email</div><div class="v-val">hello@flourandhour.com.au</div></div>
+      <div class="v-item"><div class="v-label">Good to know</div><div class="v-val">Dog friendly out front · Cash and card · Seating inside and out</div></div>
+    </div>
+    <div class="map-terra"><span>Map embed</span></div>
+  </div>
+</section>
+
+<div class="back-bar">
+  <a href="index.html">Back to all styles</a>
+</div>
+
+<footer>
+  <div class="logo">Flour &amp; Hour</div>
+  <p>34 Smith Street, Fitzroy · @flourandhour</p>
+</footer>
 
 </body>
 </html>
